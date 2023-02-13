@@ -1,0 +1,46 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.wrapper {
+    max-width: 400px;
+}
+.enter_bar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.task {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+
+}
+
+.task p {
+    cursor: pointer;
+}
+
+.task .cross {
+    cursor: pointer;
+}
+
+.filter_board {
+    display: flex;
+    justify-content: space-between;
+}
+
+.task ul li {
+    display: flex;
+}
+
+.close {
+    cursor: pointer;
+}
+
+.close:hover {
+    background-color: #f44336;
+    color: white;
+  }
