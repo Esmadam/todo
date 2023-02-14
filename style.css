@@ -14,7 +14,11 @@
 
 .wrapper .todo_list {
     width: 600px;
-    overflow: hidden;
+}
+
+.ul_list {
+    height: 700px;
+    overflow: auto;
 }
 
 .wrapper .todo_list .enter_bar {
@@ -51,6 +55,7 @@
     cursor: pointer;
     border: 1px solid rgba(184, 174, 174, 1);
     padding: 7px 10px;
+    margin: 10px 0;
 }
 
 .wrapper .todo_list .container ul li button {
@@ -66,16 +71,11 @@
     justify-content: space-between;
     margin-top: 5px;
     padding: 10px;
-    /* box-shadow: 16px 12px 17px 0px rgba(34, 60, 80, 0.2); */
 }
 .filter_board .amount {
     color: rgb(150, 141, 141);
 }
 
-.filter_board .filterToDo {
-    
-
-}
 .filter_board .filterToDo button,
 .filter_board .clearToDo button {
     color: rgb(150, 141, 141);
@@ -95,15 +95,6 @@
 .filter_board .filterToDo button:last-child:hover,
 .filter_board .clearToDo button:hover {
     color: #000;
-
-}
-/* .filter_board .filterToDo button:hover,
-.filter_board .clearToDo button:hover {
-    
-} */
-
-.filter_board .clearToDo {
-
 }
 
 .active {
