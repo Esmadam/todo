@@ -1,96 +1,132 @@
-// const li = document.querySelectorAll('li');
-
-// for(let i=0; i < li.length; i++) {
-//     let span = document.createElement('span');
-//     let txt = document.createTextNode('\u00D7');
-
-//     span.className = 'close';
-//     span.appendChild(txt);
-//     li[i].appendChild(span);
-// }
-
-// const close = document.querySelectorAll('.close')
-
-// for(let i = 0; i < close.length; i++) {
-//     close[i].onClick = function() {
-//         let el = this.parentElement;
-//         el.style.display = 'none'
-//     }
-// }
-
-// const ul = document.querySelector('ul');
-// ul.addEventListener('click', function(e) {
-//     if(e.target.tagName == 'li') {
-//         e.target.classList.toggle('checked');
-//     }
-// }, false);
-
-// const newEl = () => {
-//     const new_li = document.createElement('li');
-//     const input = document.querySelector('.send');
-//     const inputValue = input.value;
-
-//     let text = document.createTextNode(inputValue);
-
-//     li.appendChild(text);
-
-//     if (inputValue === '') {
-//         alert("You must write something!");
-//       } else {
-//         document.querySelector('ul').appendChild(li);
-//       }
-// }
-
-// document.querySelector('.send').value = '';
-// var span = document.createElement("SPAN");
-//   var txt = document.createTextNode("\u00D7");
-//   span.className = "close";
-//   span.appendChild(txt);
-//   li.appendChild(span);
-
-//   for (i = 0; i < close.length; i++) {
-//     close[i].onclick = function() {
-//       var div = this.parentElement;
-//       div.style.display = "none";
-//     }
-//   }
-
-const button = document.querySelector('.send');
+const buttonAdd = document.querySelector('.send');
 const input = document.querySelector('.input');
 const container = document.querySelector('.container')
 const ul = document.createElement('ul');
 const li = document.createElement('li');
 
+const showAllArr = document.querySelector('.show_all');
+const showActiveArr = document.querySelector('.show_active')
+const showCompletedArr = document.querySelector('.show_completed')
 
+const clearCompleted = document.querySelector('.clearToDo');
 
-const arr = ['asd', 'adam', 'asd', 'cxv'];
+const amountItems = document.querySelector('.amount_items');
 
-arr.map((el) => {
-    let li=document.createElement('li');
-    const close = document.createElement('button');
-    close.innerText = 'x'
-    li.innerHTML=`${el}`;
+let arr = [];
+
+amountItems.innerText = arr.length
+
+arr.map((el) => { // might be deleted
+    let li = document.createElement('li');
+    const close = document.createElement('button'); 
+    close.innerText = 'x';
+    li.innerHTML=`${el.name}`;
     li.appendChild(close)
     ul.appendChild(li);
-})
+});
 
 const createEl = (str) => {
-    arr.push(str);
-    let li=document.createElement('li');
+    const item = {
+        id: Math.floor(Math.random() * 99),
+        isDone: false,
+        name: str,
+    } 
+    arr.push(item);
+    const li = document.createElement('li');
     li.innerHTML=`${str}`;
+
+    const close = document.createElement('button');
+    close.innerText = 'x';
+
+    li.appendChild(close)
     ul.append(li);
+    console.log(arr)
 
+    li.addEventListener('click', () => {
+        item.isDone = !item.isDone;
+        li.classList.toggle("active");
 
+        console.log(arr)
+    });
+
+    close.addEventListener('click', () => {
+        const index = arr.findIndex(n => n.id === item.id);
+        if(index !== -1) {
+            arr.splice(index, 1)
+        }
+        console.log(arr);
+        li.remove();
+
+        amountItems.innerText = arr.length; 
+    })
+    
 }
 
-container.appendChild(ul)
+container.appendChild(ul);
 
-button.addEventListener('click', () => {
-    if(input.value.length == 0) {
+
+buttonAdd.addEventListener('click', () => {
+    if(!input.value.length) {
         alert("Enter the task");
-
     } else {
         createEl(input.value);
+        amountItems.textContent = arr.length;
+        input.value = '';
     }
 
+})
+
+showAllArr.addEventListener('click', () => {
+    let liItems = document.querySelectorAll('li');
+    Array.from(liItems).map(item => item.style.display = 'flex');
+    
+    console.log('all', arr);
+    
+    amountItems.innerText = liItems.length;    
+});
+
+
+showActiveArr.addEventListener('click', () => {
+
+    let activeItems = document.querySelectorAll('li');
+   const newArr =  Array.from(activeItems).filter(item => {
+        if(item.className == 'active') {
+            item.style.display = 'none'
+        } else {
+            item.style.display = 'flex'
+            return true
+        }
+    })
+    
+    amountItems.innerText = newArr.length;
+});
+
+
+showCompletedArr.addEventListener('click', () => {
+
+    let activeItems = document.querySelectorAll('li');
+    const newArr =   Array.from(activeItems).filter(item => {
+        if(item.className == 'active') {
+            item.style.display = 'flex'
+            return true
+        } else {
+            item.style.display = 'none'
+        }
+    });
+
+    console.log(newArr)
+
+    amountItems.innerText = newArr.length;
+})
+
+clearCompleted.addEventListener('click', () => {
+    let activeEl = document.querySelectorAll('li.active');
+
+    Array.from(activeEl).map(item => ul.removeChild(item));
+    arr = arr.filter(el => !el.isDone)
+    console.log(arr)
+
+
+  
+    amountItems.innerText = arr.length;
 })
